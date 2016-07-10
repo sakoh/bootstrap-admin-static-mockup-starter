@@ -5,46 +5,48 @@
     <!-- /.panel-heading -->
     <div class="panel-body">
         <ul class="timeline">
-            {{#each timeline}}
-                <li {{#if inverted}} class="timeline-inverted" {{/if}}>
+            {% for item in timeline %}
+                {% set status = item.status %}
+                {% set time = item.time %}
+                <li class="{{ "timeline-inverted" if item.inverted }}">
                     {{#if icon}}
-                        <div class="timeline-badge {{#if status}}{{status}}{{/if}}">
-                            <i class="fa {{icon}}"></i>
+                        <div class="timeline-badge {{ status if status }}">
+                            <i class="fa {{ item.icon }}"></i>
                         </div>
                     {{/if}}
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            <h4 class="timeline-title">{{title}}</h4>
-                            {{#if time}}
+                            <h4 class="timeline-title">{{ item.title }}</h4>
+                            {% if time %}
                                 <p>
-                                    <small class="text-muted"><i class="fa fa-clock-o"></i>{{time}}</small>
+                                    <small class="text-muted"><i class="fa fa-clock-o"></i>{{ time }}</small>
                                 </p>
-                            {{/if}}
+                            {% endif %}
                         </div>
                         <div class="timeline-body">
-                            <p>{{body}}</p>
-                            {{#if actions}}
+                            <p>{{ item.body }}</p>
+                            {% if item.actions %}
                                 <hr>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                                         <i class="fa fa-gear"></i>  <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        {{#each actions}}
+                                        {% for action in actions %}
                                             <li>
-                                                <a href="#">{{this}}</a>
+                                                <a href="#">{{ action }}</a>
                                             </li>
-                                            {{/each}}
+                                        {% endfor %}
                                             <li class="divider"></li>
                                             <li><a href="#">Separated link</a>
                                             </li>
                                         </ul>
                                     </div>
-                            {{/if}}
+                            {% endif %}
                         </div>
                     </div>
                 </li>
-            {{/each}}
+            {% endfor %}
         </ul>
     </div>
     <!-- /.panel-body -->

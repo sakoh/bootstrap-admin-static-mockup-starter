@@ -1,24 +1,27 @@
-{{#with nav}}
+{% set message = nav.message %}
+{% set tasks = nav.tasks %}
+{% set notifications = nav.notifications %}
+{% set profile_options = nav.profile_options %}
 <ul class="nav navbar-top-links navbar-right">
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
             <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-messages">
-            {{#each messages}}
+            {% for message in messages %}
                 <li>
                     <a href="#">
                         <div>
-                            <strong>{{author}}</strong>
+                            <strong>{{ message.author }}</strong>
                             <span class="pull-right text-muted">
                                 <em>Yesterday</em>
                             </span>
                         </div>
-                        <div>{{body}}</div>
+                        <div>{{ message.body }}</div>
                     </a>
                 </li>
                 <li class="divider"></li>
-            {{/each}}
+            {% endfor %}
         <!-- /.dropdown-messages -->
         </ul>
     </li>
@@ -28,24 +31,25 @@
             <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-tasks">
-            {{#each tasks}}
+            {% for task in tasks %}
+                {% set percent = task.percent %}
                 <li>
                     <a href="#">
                         <div>
                             <p>
-                                <strong>Task {{id}}</strong>
-                                <span class="pull-right text-muted">{{percent}}% Complete</span>
+                                <strong>Task {{ task.id }}</strong>
+                                <span class="pull-right text-muted">{{ percent }}% Complete</span>
                             </p>
                             <div class="progress progress-striped active">
-                                <div class="progress-bar progress-bar-{{status}}" role="progressbar" aria-valuenow="{{percent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{percent}}%">
-                                    <span class="sr-only">{{percent}}% Complete (success)</span>
+                                <div class="progress-bar progress-bar-{{ task.status }}" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%">
+                                    <span class="sr-only">{{ percent }}% Complete (success)</span>
                                 </div>
                             </div>
                         </div>
                     </a>
                 </li>
                 <li class="divider"></li>
-            {{/each}}
+            {% endfor %}
             <li>
                 <a class="text-center" href="#">
                     <strong>See All Tasks</strong>
@@ -61,17 +65,17 @@
             <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-alerts">
-            {{#each notifications}}
+            {% for notification in notifications %}
                 <li>
                     <a href="#">
                         <div>
-                            <i class="fa {{icon}} fa-fw"></i> {{title}}
-                            <span class="pull-right text-muted small">{{time}}</span>
+                            <i class="fa {{ notification.icon }} fa-fw"></i> {{ notification.title }}
+                            <span class="pull-right text-muted small">{{ notification.time }}</span>
                         </div>
                     </a>
                 </li>
                 <li class="divider"></li>
-            {{/each}}
+            {% endfor %}
             <li>
                 <a class="text-center" href="#">
                     <strong>See All Alerts</strong>
@@ -87,15 +91,18 @@
             <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
-            {{#each profile_options}}
-                {{#is title "==" "Logout"}}
+            {% for profile_option in profile_options %}
+                {% set title = profile_option.title %}
+                {% if title == "Logout" %}
 					<li class="divider"></li>
-				{{/is}}
-                <li><a href="#"><i class="fa {{icon}} fa-fw"></i> {{title}}</a></li>
-            {{/each}}
+				{% endif %}
+                <li>
+                    <a href="#"><i class="fa {{ profile_option.icon }} fa-fw">
+                    </i> {{ title }}
+                </a></li>
+            {% endfor %}
         </ul>
         <!-- /.dropdown-user -->
     </li>
     <!-- /.dropdown -->
 </ul>
-{{/with}}

@@ -6,20 +6,18 @@
     <div class="panel-body">
         <ul class="timeline">
             {% for item in timeline %}
-                {% set status = item.status %}
-                {% set time = item.time %}
                 <li class="{{ "timeline-inverted" if item.inverted }}">
-                    {{#if icon}}
-                        <div class="timeline-badge {{ status if status }}">
+                    {% if item.icon %}
+                        <div class="timeline-badge {{ item.status if item.status }}">
                             <i class="fa {{ item.icon }}"></i>
                         </div>
-                    {{/if}}
+                    {% endif %}
                     <div class="timeline-panel">
                         <div class="timeline-heading">
                             <h4 class="timeline-title">{{ item.title }}</h4>
-                            {% if time %}
+                            {% if item.time %}
                                 <p>
-                                    <small class="text-muted"><i class="fa fa-clock-o"></i>{{ time }}</small>
+                                    <small class="text-muted"><i class="fa fa-clock-o"></i>{{ item.time }}</small>
                                 </p>
                             {% endif %}
                         </div>

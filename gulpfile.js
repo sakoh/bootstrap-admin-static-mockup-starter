@@ -9,7 +9,7 @@ const gulp = require("gulp"),
     browserSync = require("browser-sync").create(),
     nunjucks = require("gulp-nunjucks"),
     paths = require("./paths.json"),
-    data = require("./data.json");
+    data = require("./data");
 
 gulp.task("watch", ["compile"], () => {
     const reload = browserSync.reload;
